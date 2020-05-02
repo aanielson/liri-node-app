@@ -3,11 +3,11 @@ require("dotenv").config();
 
 //Necessary requirements for the spotify queries
 //Add the code required to import the keys.js file and store it in a variable.
-var keys = require('./keys.js'); //not currently working...
+var keys = require('./key.js'); //not currently working...
 // access your Spotify keys information
 var Spotify = require('node-spotify-api');
-var spotifySearch = new Spotify(keys.spotify);
-console.log(spotifySearch.id);
+var mySpotify = new Spotify(keys.spotify);
+//console.log(mySpotify.id);
 
 //Necessary requirements for the file integration and axios call
 var filesSystem = require("fs"); //included for the fourth command that utilizes the txt file
@@ -26,23 +26,25 @@ var runCommands = function() {
         //axios call
         axios({
             method: "get",
-            url: queryURL,
-            responseType: "stream"
+            url: queryURL
         }).then(function (response) {
-        //render the venueName, venueLocation, & eventDate (use moment to format this as "MM/DD/YYYY") about each event to the terminal
-            for (var i = 0; i < 3; i++) {
-                console.log(response.venue.name);
-                console.log(response.venue.location);
-                console.log(response.datetime);
-            }
-        })
+            console.log('test');
+           // console.log(response);
+            //render the venueName, venueLocation, & eventDate (use moment to format this as "MM/DD/YYYY") about each event to the terminal        
+            for (var i = 0; i < response.data.length; i++) {
+                console.log(response.data[i].venue.name);
+                console.log(response.data[i].venue.name);
+                console.log(response.data[i].venue.location);
+                console.log(response.data[i].datetime);
+            } 
+        });
     }; 
 
     //spotify-this-song
     if (command === "spotify-this-song") {
         //You will utilize the node-spotify-api package in order to retrieve song information from the Spotify API
         //ex command: node liri.js spotify-this-song '<song name here>'
-        spotifySearch.search(
+        mySpotify.search(
             {
                 type: "track",
                 query: name,
@@ -106,6 +108,8 @@ var runCommands = function() {
         runCommands();
     }
 }
+//call the commands function
+runCommands();
 
 //Using the fs Node package, LIRI will take the text inside of random.txt
 function doIt() {
