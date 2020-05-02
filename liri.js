@@ -1,5 +1,7 @@
 //add code to read and set any environment variables with the dotenv package:
 require("dotenv").config();
+
+//include moment for the date formatting of the concert
 var moment = require("moment");
 moment().subtract(10, 'days').calendar()
 
@@ -64,26 +66,32 @@ function concertThis() {
 function spotifyThis() {
     //You will utilize the node-spotify-api package in order to retrieve song information from the Spotify API
     //ex command: node liri.js spotify-this-song '<song name here>'
+    //If no song is provided then your program will default to "The Sign" by Ace of Base
+    if (!name) {
+        name = "The Sign";
+    }
     mySpotify.search(
         {
             type: "track",
             query: name,
             limit: 5
-    }, function(err, data) {
+    }, function(err, response) {
         if (err) {
             console.log("Error occurred: " + err);
         }
         //show the following information about the song in your terminal/bash window
-        console.log(data);
+        console.log("Searching for song")
+        console.log("------------------------------");
         //artists
-        JSON.stringify(data.tracks.items[0].artists[0].name);
-        //song name
-        JSON.stringify(data.tracks.items[0]);
-        //preview link of the song from spotify
-        JSON.stringify(data.tracks.items[0].external_urls[0].href);
-        //album that the song is from
-        JSON.stringify(data.tracks.items[0].name);
-        //If no song is provided then your program will default to "The Sign" by Ace of Base
+        console.log("Artist: " + response.tracks.items[0].artists[0].name);
+        // //song name
+        console.log("Song: " + response.tracks.items[0].name);
+        // //preview link of the song from spotify
+        console.log("Link: " + response.tracks.items[0].album.external_urls.spotify);
+        // //album that the song is from
+        console.log("Album: " + response.tracks.items[0].album.name);
+        console.log("------------------------------");
+        
     });
 };
     
