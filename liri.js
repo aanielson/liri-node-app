@@ -1,10 +1,14 @@
 //add code to read and set any environment variables with the dotenv package:
 require("dotenv").config();
+
 //Add the code required to import the keys.js file and store it in a variable.
-var keys = require("./keys.js");
+var keys = require('./keys.js'); //not currently working...
+
 // access your Spotify keys information
 var Spotify = require('node-spotify-api');
-var spotify = new Spotify(keys.spotify);
+var spotifySearch = new Spotify(keys.spotify);
+console.log(spotifySearch.id);
+
 
 //commands to take in
 var filesSystem = require("fs"); //included for the fourth command that utilizes the txt file
@@ -12,7 +16,7 @@ const axios = require('axios'); //included for the queries
 var command = process.argv[2]; //user input to decide on which command
 var name = process.argv[3]; //info to be queried
 
-var runCommands = function {
+var runCommands = function() {
     //concert-this
     if (command === "concert-this") {
         //search the Bands in Town Artist Events API ("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp") for an artist
@@ -27,24 +31,28 @@ var runCommands = function {
     if (command === "spotify-this-song") {
         //You will utilize the node-spotify-api package in order to retrieve song information from the Spotify API
         //ex command: node liri.js spotify-this-song '<song name here>'
-        spotify.search(
+        spotifySearch.search(
             {
                 type: "track",
                 query: name
             }
         ).then(function(response) {
             //show the following information about the song in your terminal/bash window
-            
+            console.log(response.tracks);
             //artists
+            JSON.stringify(response.tracks.items[0].artists[0].name);
             //song name
+            //JSON.stringify(response.tracks.items[0]);
             //preview link of the song from spotify
+            JSON.stringify(response.tracks.items[0].external_urls[0].href);
             //album that the song is from
+            JSON.stringify(response.tracks.items[0].name);
             //If no song is provided then your program will default to "The Sign" by Ace of Base
-            }
-        })
+        }).catch(function(err) {
+            console.log(err);
+        });
+    }
         
-        
-
     //movie-this
     if (command === "movie-this") {
         //You'll use the axios package to retrieve data from the OMDB API. Like all of the in-class activities, the OMDB API requires an API key. You may use trilogy
