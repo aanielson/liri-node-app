@@ -19,12 +19,15 @@ var name = process.argv[3]; //info to be queried
 var runCommands = function() {
     //concert-this
     if (command === "concert-this") {
+        var artist = name;
         //search the Bands in Town Artist Events API ("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp") for an artist
         
         //render the venueName, venueLocation, & eventDate (use moment to format this as "MM/DD/YYYY") about each event to the terminal
-        //no need to sign up for a Bands in Town api_id key.
-            //Use the "codingbootcamp" as your "app_id"
-            //ex url: https://rest.bandsintown.com/artists/celine+dion/events?app_id=codingbootcamp
+        for (var i = 0; i < 3; i++) {
+            console.log(response.venue.name);
+            console.log(response.venue.location);
+            console.log(response.datetime);
+        }
     }  
 
     //spotify-this-song
@@ -57,15 +60,19 @@ var runCommands = function() {
     if (command === "movie-this") {
         //You'll use the axios package to retrieve data from the OMDB API. Like all of the in-class activities, the OMDB API requires an API key. You may use trilogy
         //ex command line: node liri.js movie-this '<movie name here>'
+        var movieName = name;
+        // Then run a request with axios to the OMDB API with the movie specified
+        var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
+        
         //output the folling info to the terminal/bash windo:
             // Title of the movie.
-            //   * Year the movie came out.
-            //   * IMDB Rating of the movie.
-            //   * Rotten Tomatoes Rating of the movie.
-            //   * Country where the movie was produced.
-            //   * Language of the movie.
-            //   * Plot of the movie.
-            //   * Actors in the movie.
+            // Year the movie came out.
+            // IMDB Rating of the movie.
+            // Rotten Tomatoes Rating of the movie.
+            // Country where the movie was produced.
+            // Language of the movie.
+            // Plot of the movie.
+            // Actors in the movie.
             //If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
     }
 
@@ -77,6 +84,7 @@ var runCommands = function() {
         runCommands();
     }
 }
+
 //Using the fs Node package, LIRI will take the text inside of random.txt
 function doIt() {
     // It should run spotify-this-song for "I Want it That Way," as follows the text in random.txt.
