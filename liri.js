@@ -15,8 +15,6 @@ var Spotify = require('node-spotify-api');
 var mySpotify = new Spotify(keys.spotify);
 //console.log(mySpotify.id);
 
-
-
 //take in user input and store as variables for the queries
 var command = process.argv[2]; //user input to decide on which command
 var name = process.argv.slice(3).join(" "); //info to be queried
