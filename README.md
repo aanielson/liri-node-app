@@ -23,7 +23,7 @@ https://youtu.be/gcZITZZOf_Q
 ## GitHub Link
 https://github.com/aanielson/liri-node-app
 
-## Teachnologies Used:
+## Technologies Used:
 JavaScript
 Node
 
